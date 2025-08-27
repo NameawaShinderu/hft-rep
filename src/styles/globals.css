@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-success: #00D4AA;
+    --color-danger: #FF6B6B;
+    --color-primary: #4299E1;
+    --color-bg-dark: #0F1419;
+    --color-neutral: #2D3748;
+    --color-warning: #ED8936;
+    
+    /* Glassmorphism variables */
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-dark-bg: rgba(0, 0, 0, 0.2);
+    --glass-dark-border: rgba(255, 255, 255, 0.1);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-bg-dark);
+    color: white;
+    overflow-x: hidden;
+  }
+
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(45, 55, 72, 0.3);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(66, 153, 225, 0.5);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(66, 153, 225, 0.8);
+  }
+
+  /* Focus styles */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Remove default button styles */
+  button {
+    border: none;
+    background: none;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  /* Input styles */
+  input, textarea, select {
+    font-family: inherit;
+  }
+}
+
+@layer components {
+  /* Glassmorphism utilities */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+  }
+
+  .glass-dark {
+    background: var(--glass-dark-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-dark-border);
+  }
+
+  /* Price change animations */
+  .price-flash-green {
+    animation: flashGreen 0.6s ease-out;
+  }
+
+  .price-flash-red {
+    animation: flashRed 0.6s ease-out;
+  }
+
+  @keyframes flashGreen {
+    0% { background-color: rgba(0, 212, 170, 0.3); }
+    100% { background-color: transparent; }
+  }
+
+  @keyframes flashRed {
+    0% { background-color: rgba(255, 107, 107, 0.3); }
+    100% { background-color: transparent; }
+  }
+
+  /* Loading skeleton */
+  .skeleton {
+    @apply animate-pulse bg-gray-300 dark:bg-gray-600 rounded;
+  }
+
+  /* Custom scrollbar for specific elements */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(66, 153, 225, 0.5) rgba(45, 55, 72, 0.3);
+  }
+}
+
+@layer utilities {
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+
+  /* Text utilities */
+  .text-profit {
+    color: var(--color-success);
+  }
+
+  .text-loss {
+    color: var(--color-danger);
+  }
+
+  .text-neutral {
+    color: #64748B;
+  }
+
+  /* Background utilities */
+  .bg-profit {
+    background-color: var(--color-success);
+  }
+
+  .bg-loss {
+    background-color: var(--color-danger);
+  }
+
+  /* Responsive font sizes */
+  .text-responsive-xs {
+    @apply text-xs sm:text-sm;
+  }
+
+  .text-responsive-sm {
+    @apply text-sm sm:text-base;
+  }
+
+  .text-responsive-base {
+    @apply text-base sm:text-lg;
+  }
+
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl;
+  }
+
+  /* Truncate text with ellipsis */
+  .truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
