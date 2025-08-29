@@ -21,6 +21,16 @@ const initialState: User = {
     tablePageSize: 20,
     currency: 'USD',
   },
+  // Add missing properties
+  pammSubscriptions: [],
+  wallet: {
+    totalBalance: 50000.00,
+    availableBalance: 48200.00,
+    investedAmount: 1200.00,
+    totalPnl: 2340.75,
+    totalWithdrawals: 5000.00,
+    totalDeposits: 55000.00,
+  },
 };
 
 const userSlice = createSlice({

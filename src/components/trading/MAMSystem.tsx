@@ -1,75 +1,15 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { useAppDispatch } from '../../store/hooks';
+import { useGetSignalProvidersQuery } from '../../services/api';
 import { toggleFollowProvider } from '../../store/slices/mamSlice';
-import { TrendingUp, TrendingDown, Users, Target } from 'lucide-react';
+import { Users, Target } from 'lucide-react';
 
 const MAMSystem: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { providers } = useAppSelector(state => state.mam);
+  const { data: providersData, isLoading } = useGetSignalProvidersQuery();
 
-  // Mock signal provider data
-  const mockProviders = [
-    {
-      id: 'demo',
-      name: 'Demo',
-      rank: 1,
-      growth: -9677.25,
-      weeks: 0,
-      followers: 12,
-      drawdown: 0,
-      fund: 64115.03,
-      riskLevel: 1 as const,
-      isFollowed: true,
-    },
-    {
-      id: 'harsha',
-      name: 'Harsha',
-      rank: 1,
-      growth: 9194.28,
-      weeks: 35,
-      followers: 4,
-      drawdown: 0,
-      fund: 30684.28,
-      riskLevel: 1 as const,
-      isFollowed: false,
-    },
-    {
-      id: 'xtreme-next',
-      name: 'Xtreme Next',
-      rank: 1,
-      growth: 83858.35,
-      weeks: 0,
-      followers: 1,
-      drawdown: 0,
-      fund: 6419.05,
-      riskLevel: 1 as const,
-      isFollowed: false,
-    },
-    {
-      id: 'ai',
-      name: 'Ai',
-      rank: 1,
-      growth: 491.65,
-      weeks: 39,
-      followers: 1,
-      drawdown: 0,
-      fund: 577.55,
-      riskLevel: 1 as const,
-      isFollowed: false,
-    },
-    {
-      id: 'ak',
-      name: 'Ak',
-      rank: 2,
-      growth: -93.74,
-      weeks: 0,
-      followers: 0,
-      drawdown: 0,
-      fund: 0.00,
-      riskLevel: 1 as const,
-      isFollowed: false,
-    },
-  ];
+  // Use data from API service
+  const providers = providersData?.data || [];
 
   const handleToggleFollow = (providerId: string) => {
     dispatch(toggleFollowProvider(providerId));
@@ -102,6 +42,19 @@ const MAMSystem: React.FC = () => {
       </svg>
     );
   };
+
+  if (isLoading) {
+    return (
+      <div className="bg-neutral rounded-xl border border-gray-700 p-6">
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
+            <p className="text-gray-400">Loading signal providers...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -139,7 +92,7 @@ const MAMSystem: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {mockProviders.map((provider) => (
+              {providers.map((provider) => (
                 <tr key={provider.id} className="border-b border-gray-700 hover:bg-gray-800 transition-colors">
                   <td className="p-4">
                     <div className="flex items-center space-x-2">

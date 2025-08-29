@@ -2,6 +2,7 @@ import React from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { setTheme } from '../../store/slices/uiSlice';
 import { Bell, Sun, Moon, User, Search } from 'lucide-react';
+import ConnectionStatus from '../status/ConnectionStatus';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -45,6 +46,9 @@ const Header: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* WebSocket Connection Status */}
+        <ConnectionStatus size="md" showText={false} />
 
         {/* Theme Toggle */}
         <button

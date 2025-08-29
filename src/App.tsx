@@ -7,6 +7,9 @@ import Trading from './pages/Trading';
 import Portfolio from './pages/Portfolio';
 import History from './pages/History';
 import Settings from './pages/Settings';
+import PAMMManager from './pages/PAMMManager';
+import WalletPage from './pages/Wallet';
+import OrdersPage from './pages/OrdersPage';
 
 function App() {
   const theme = useAppSelector(state => state.ui.theme);
@@ -27,6 +30,9 @@ function App() {
           <Route path="/trading" element={<Trading />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/history" element={<History />} />
+          <Route path="/pamm" element={<PAMMManager />} />
+          <Route path="/wallet" element={<WalletPage />} />
+          <Route path="/orders" element={<OrdersPage />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </MainLayout>

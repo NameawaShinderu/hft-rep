@@ -10,7 +10,8 @@ import {
   Settings, 
   Menu,
   BarChart3,
-  Wallet
+  Wallet,
+  Users
 } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
@@ -23,8 +24,8 @@ const Sidebar: React.FC = () => {
     { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
     { id: 'trading', icon: TrendingUp, label: 'Trading', path: '/trading' },
     { id: 'portfolio', icon: Briefcase, label: 'Portfolio', path: '/portfolio' },
+    { id: 'pamm', icon: Users, label: 'PAMM Manager', path: '/pamm' },
     { id: 'history', icon: History, label: 'History', path: '/history' },
-    { id: 'analytics', icon: BarChart3, label: 'Analytics', path: '/analytics' },
     { id: 'wallet', icon: Wallet, label: 'Wallet', path: '/wallet' },
     { id: 'settings', icon: Settings, label: 'Settings', path: '/settings' },
   ];

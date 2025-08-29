@@ -26,7 +26,7 @@ const uiSlice = createSlice({
     setSidebarOpen: (state, action: PayloadAction<boolean>) => {
       state.sidebarOpen = action.payload;
     },
-    setTheme: (state, action: PayloadAction<'dark' | 'light'>) => {
+    setTheme: (state, action: PayloadAction<'dark' | 'light' | 'system'>) => {
       state.theme = action.payload;
     },
     addNotification: (state, action: PayloadAction<Omit<NotificationState, 'id' | 'timestamp' | 'dismissed'>>) => {

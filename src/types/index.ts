@@ -34,6 +34,39 @@ export interface SignalProvider {
   description?: string;
   createdAt: Date;
   lastActive: Date;
+  // Enhanced PAMM fields
+  sparklineData: number[];
+  investment?: number; // Amount invested by current user
+  sharedPnl?: number; // P&L from this provider
+  netAmount?: number; // Total return including investment
+  allocationPercent?: number; // Percentage of portfolio allocated
+}
+
+export interface PAMMSubscription {
+  id: string;
+  providerId: string;
+  providerName: string;
+  investment: number;
+  sharedPnl: number;
+  netAmount: number;
+  allocationPercent: number;
+  subscribedAt: Date;
+  lastUpdate: Date;
+  status: 'active' | 'paused' | 'closed';
+  performanceHistory: number[];
+}
+
+export interface PaymentMethod {
+  id: string;
+  name: string;
+  type: 'crypto' | 'bank' | 'digital_wallet' | 'card';
+  icon: string;
+  minimumDeposit: number;
+  maximumDeposit?: number;
+  processingTime: string;
+  fee: number; // percentage
+  isAvailable: boolean;
+  description?: string;
 }
 
 export interface MAMSubscription {
@@ -56,6 +89,36 @@ export interface User {
   subscriptions: MAMSubscription[];
   favorites: string[]; // symbol IDs
   preferences: UserPreferences;
+  // Enhanced wallet fields
+  pammSubscriptions: PAMMSubscription[];
+  wallet: {
+    totalBalance: number;
+    availableBalance: number;
+    investedAmount: number;
+    totalPnl: number;
+    totalWithdrawals: number;
+    totalDeposits: number;
+  };
+}
+
+export interface WalletTransaction {
+  id: string;
+  type: 'deposit' | 'withdrawal' | 'investment' | 'profit_share' | 'fee';
+  amount: number;
+  currency: string;
+  paymentMethod: string;
+  status: 'pending' | 'completed' | 'failed' | 'cancelled';
+  timestamp: Date;
+  description?: string;
+  txHash?: string; // For crypto transactions
+  fee?: number;
+}
+
+export interface DepositRequest {
+  paymentMethodId: string;
+  amount: number;
+  currency: string;
+  note?: string;
 }
 
 export interface UserPreferences {
@@ -102,7 +165,7 @@ export interface MAMState {
 
 export interface UIState {
   sidebarOpen: boolean;
-  theme: 'dark' | 'light';
+  theme: 'dark' | 'light' | 'system';
   notifications: NotificationState[];
   modals: {
     confirmFollow?: {
@@ -158,4 +221,51 @@ export interface ChartDataPoint {
   timestamp: number;
   value: number;
   volume?: number;
+}
+// Order Management Types
+export type OrderStatus = 
+  | 'pending'
+  | 'filled'
+  | 'partial'
+  | 'cancelled'
+  | 'rejected'
+  | 'expired';
+
+export type OrderType = 
+  | 'market'
+  | 'limit'
+  | 'stop'
+  | 'stop-limit';
+
+export interface Order {
+  id: string;
+  symbol: string;
+  type: OrderType;
+  side: 'buy' | 'sell';
+  quantity: number;
+  price?: number;
+  stopPrice?: number;
+  status: OrderStatus;
+  filledQuantity: number;
+  avgFillPrice?: number;
+  fees: number;
+  createdAt: Date;
+  updatedAt: Date;
+  executedAt?: Date;
+}
+
+// Enhanced market data state
+export interface MarketWatchState {
+  symbols: Symbol[];
+  loading: boolean;
+  error: string | null;
+  searchTerm: string;
+  activeTab: 'favorites' | 'all';
+  currentPage: number;
+  itemsPerPage: number;
+  sortBy: keyof Symbol | null;
+  sortDirection: 'asc' | 'desc';
+  filters: Record<string, any>;
+  lastUpdate?: Date;
+  connectionStatus?: 'connected' | 'disconnected' | 'connecting';
 }

@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { tradingApi } from '../services/api';
 import marketSlice from './slices/marketSlice';
 import mamSlice from './slices/mamSlice';
 import uiSlice from './slices/uiSlice';
@@ -10,6 +11,8 @@ export const store = configureStore({
     mam: mamSlice,
     ui: uiSlice,
     user: userSlice,
+    // Add RTK Query API reducer
+    [tradingApi.reducerPath]: tradingApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -17,7 +20,9 @@ export const store = configureStore({
         ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
         ignoredPaths: ['register'],
       },
-    }),
+    })
+    // Add RTK Query middleware
+    .concat(tradingApi.middleware),
   devTools: process.env.NODE_ENV !== 'production',
 });
 
